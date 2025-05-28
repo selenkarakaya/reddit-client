@@ -1,1 +1,44 @@
 @import "tailwindcss";
+
+/* entry border */
+.borderCSS {
+  border: 3px solid #1b4332;
+  border-radius: 2% 6% 5% 4% / 1% 1% 2% 4%;
+  &::before {
+    content: "";
+    display: block;
+    position: absolute;
+    border: 2px solid #1b4332;
+    border-radius: 1% 1% 2% 4% / 2% 6% 5% 4%;
+  }
+}
+
+/* entry hover */
+.card-list:has(.borderCSS:hover) .borderCSS:not(:hover) {
+  filter: blur(4px);
+}
+.card-list:has(.hover:hover) .hover:not(:hover) {
+  filter: blur(4px);
+}
+.hover {
+  transition: all 150ms ease-in-out;
+}
+
+.hover::before {
+  content: "";
+}
+.hover {
+  background: #ffffff;
+  position: relative;
+  &::before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0) scale(1.015) rotate(0.5deg);
+    border-radius: 1% 1% 2% 4% / 2% 6% 5% 4%;
+  }
+}
