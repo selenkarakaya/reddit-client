@@ -25,10 +25,13 @@ const postsSlice = createSlice({
     items: [], // Posts will be stored here.
     status: "idle", // idle | loading | succeeded | failed
     error: null,
+    selectedCategory: "popular",
   },
 
   reducers: {
-    // İstersen normal reducerlar buraya eklenebilir (şimdilik ihtiyacımız yok)
+    setSelectedCategory(state, action) {
+      state.selectedCategory = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -46,4 +49,5 @@ const postsSlice = createSlice({
   },
 });
 
+export const { setSelectedCategory } = postsSlice.actions;
 export default postsSlice.reducer;
