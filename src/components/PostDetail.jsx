@@ -1,14 +1,16 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchComments } from "../features/comments/commentsSlice"; // Yorumlar için slice
-import { fetchPosts } from "../features/posts/postsSlice"; // Post detay için gerekebilir
+import { fetchComments } from "../features/comments/commentsSlice";
+import { fetchPosts } from "../features/posts/postsSlice";
+import LoadingSpinner from "./LoadingSpinner";
+import { timeAgo } from "../utils/timeAgo";
 
 const PostDetail = () => {
   const { subreddit, postId } = useParams();
   const dispatch = useDispatch();
 
-  // Post detay için posts listesinden ya da ayrı store’dan çekebilirsin
+  // You can fetch the post details from the posts list or from a separate store
   const post = useSelector((state) =>
     state.posts.items.find((p) => p.id === postId)
   );
@@ -18,23 +20,26 @@ const PostDetail = () => {
 
   useEffect(() => {
     if (!post) {
-      dispatch(fetchPosts(subreddit)); // Eğer post listede yoksa ilgili subreddit'i çek
+      dispatch(fetchPosts(subreddit)); // If the post is not in the list, fetch the relevant subreddit
     }
     if (post) {
       dispatch(fetchComments(post.permalink));
     }
   }, [dispatch, subreddit, post, postId]);
-
-  if (!post) return <div>Loading post...</div>;
+  if (!post) {
+    return <LoadingSpinner />;
+  }
+  if (commentsStatus === "loading") {
+    return <LoadingSpinner />;
+  }
 
   return (
     <div>
       <h2>{post.title}</h2>
       <p>By: {post.author}</p>
       <p>{post.selftext}</p>
-
       <h3>Comments</h3>
-      {commentsStatus === "loading" && <p>Loading comments...</p>}
+
       {commentsStatus === "failed" && <p>Error loading comments</p>}
       {comments.map((comment) => (
         <div
@@ -44,6 +49,7 @@ const PostDetail = () => {
           <p>
             <strong>{comment.author}</strong>: {comment.body}
           </p>
+          <p>Posted: {timeAgo(post.created_utc)}</p>
         </div>
       ))}
     </div>
