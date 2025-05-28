@@ -1,10 +1,21 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { fetchPosts } from "../features/posts/postsSlice";
 
 function SearchBar() {
   const [term, setTerm] = useState("");
+  const dispatch = useDispatch();
 
   const handleSearch = () => {
-    console.log(term);
+    if (term.trim() !== "") {
+      dispatch(fetchPosts(term.trim()));
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
   };
 
   return (
@@ -15,6 +26,7 @@ function SearchBar() {
         className="w-full px-4 py-2 bg-transparent outline-none text-gray-800 placeholder-gray-400"
         value={term}
         onChange={(e) => setTerm(e.target.value)}
+        onKeyDown={handleKeyDown}
       />
       <button onClick={handleSearch}>Search icon</button>
     </div>
