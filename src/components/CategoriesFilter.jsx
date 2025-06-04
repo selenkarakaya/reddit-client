@@ -37,9 +37,9 @@ function CategoriesFilter() {
   const [showAll, setShowAll] = useState(false);
   const width = useWindowWidth();
   const handleCategoryClick = (category) => {
-    const subreddit = category === "Home" ? "" : category;
+    const subreddit = category === "Home" ? "popular" : category;
     if (category === selectedCategory) return; //Do not fetch if the same category is clicked
-    dispatch(setSelectedCategory(subreddit));
+    dispatch(setSelectedCategory(category));
     dispatch(fetchPosts(subreddit));
   };
 
