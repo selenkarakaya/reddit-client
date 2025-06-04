@@ -1,39 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FaAngleDoubleUp, FaAngleDoubleDown } from "react-icons/fa";
 import { motion } from "framer-motion";
+import { timeAgo } from "../utils/timeAgo";
 import { VscCommentDraft } from "react-icons/vsc";
+import { FiShare } from "react-icons/fi";
+import { IoClose } from "react-icons/io5";
 
 const PostItem = ({ post }) => {
-  const [score, setScore] = useState(post.score);
-  const [vote, setVote] = useState(null); // 'up', 'down', or null
+  const [score, setScore] = useState(post.score); // Track the current vote score
+  const [vote, setVote] = useState(null); // Track user vote: 'up', 'down', or null
+  const [showPopup, setShowPopup] = useState(false); // Toggle visibility of the share popup
+  const [popupPosition, setPopupPosition] = useState({ top: 0, left: 0 }); // Position of the popup
+  const shareBtnRef = useRef(null); // Reference to the share button element
+  const [copiedVisible, setCopiedVisible] = useState(false); // ⬅️ New state for copied message
 
-  const timeAgo = (createdUtc) => {
-    const now = Date.now(); //JS Date gives time in milliseconds
-    const postTime = createdUtc * 1000; // post.created_utc gives the time in seconds, convert it to milliseconds for JS Date
-    const diff = now - postTime; // this is milliseconds
-
-    const seconds = Math.floor(diff / 1000);
-    const minutes = Math.floor(seconds / 60);
-    const hours = Math.floor(minutes / 60);
-    const days = Math.floor(hours / 24);
-    const weeks = Math.floor(days / 7);
-
-    if (weeks >= 1) {
-      // If it’s more than 1 week ago, display the full date (e.g., 2025-05-28)
-      const date = new Date(postTime);
-      return date.toLocaleDateString();
-    } else if (days >= 1) {
-      return days + (days === 1 ? " day ago" : " days ago");
-    } else if (hours >= 1) {
-      return hours + (hours === 1 ? " hour ago" : " hours ago");
-    } else if (minutes >= 1) {
-      return minutes + (minutes === 1 ? " minute ago" : " minutes ago");
-    } else {
-      return "Just now";
-    }
-  };
-
+  // Handle vote button click (upvote or downvote)
   const handleScore = (direction) => {
     // If the same direction is pressed again, remove the vote
     if (direction === vote) {
@@ -54,8 +36,53 @@ const PostItem = ({ post }) => {
     }
   };
 
+  // Copy the post's URL to clipboard
+  const handleCopyLink = (e) => {
+    const url = `${window.location.origin}/post/${post.subreddit}/${post.id}`;
+    console.log(`${window.location.origin}/post/${post.subreddit}/${post.id}`);
+    navigator.clipboard.writeText(url).then(() => {
+      setShowPopup(false);
+      setCopiedVisible(true); // Show "Copied!" message
+    });
+    // Automatically hide after 3 seconds
+    setTimeout(() => {
+      setCopiedVisible(false);
+    }, 3000);
+  };
+
+  const closeCopiedMessage = () => {
+    setCopiedVisible(false);
+  };
+
+  // Toggle the visibility and position of the popup
+  const togglePopup = () => {
+    if (showPopup) {
+      setShowPopup(false);
+    } else {
+      const rect = shareBtnRef.current.getBoundingClientRect();
+      setPopupPosition({ top: rect.bottom + 5, left: rect.left });
+      setShowPopup(true);
+    }
+  };
+
+  // Close the popup when clicking outside the share button
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (
+        showPopup &&
+        shareBtnRef.current &&
+        !shareBtnRef.current.contains(e.target)
+      ) {
+        setShowPopup(false);
+      }
+    };
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, [showPopup]);
+
   return (
     <div className="flex justify-between borderCSS">
+      {/* VOTE COLUMN */}
       <div className="flex flex-col justify-center">
         <motion.button
           whileTap={{ rotate: 15, scale: 2, x: 5, y: -5 }}
@@ -87,6 +114,7 @@ const PostItem = ({ post }) => {
           <FaAngleDoubleDown />
         </motion.button>
       </div>
+      {/* CONTENT */}
       <div
         className="post-item"
         style={{ padding: "10px", borderBottom: "1px solid #ccc" }}
@@ -100,13 +128,57 @@ const PostItem = ({ post }) => {
           />
         )}
 
-        <p>Author: {post.author}</p>
-        <p>Posted: {timeAgo(post.created_utc)}</p>
-        <Link to={`/post/${post.subreddit}/${post.id}`}>
-          <VscCommentDraft />
-          <span>{post.num_comments}</span>
-        </Link>
+        <p>{post.author}</p>
+        <p> {timeAgo(post.created_utc)}</p>
+
+        <div className="flex items-center gap-3 mt-2">
+          <Link
+            to={`/post/${post.subreddit}/${post.id}`}
+            className="flex items-center gap-1 text-blue-500"
+          >
+            <VscCommentDraft />
+            <span>{post.num_comments}</span>
+          </Link>
+
+          {/* Share Button */}
+          <button
+            ref={shareBtnRef}
+            onClick={togglePopup}
+            className="text-gray-600 hover:text-blue-500"
+            title="Share"
+          >
+            <FiShare />
+          </button>
+        </div>
       </div>
+      {/* Share Popup */}
+      {showPopup && (
+        <div
+          style={{
+            position: "fixed",
+            top: popupPosition.top,
+            left: popupPosition.left,
+            zIndex: 9999,
+          }}
+          className="bg-white border border-gray-300 rounded shadow-md px-4 py-2"
+        >
+          <button onClick={handleCopyLink} className="text-sm text-blue-600">
+            Copy Link
+          </button>
+        </div>
+      )}
+      {/* ✅ Copied Message Box */}
+      {copiedVisible && (
+        <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-green-100 border border-green-400 text-green-700 px-4 py-2 rounded shadow-lg flex items-center gap-2 z-[9999]">
+          <span>Link copied!</span>
+          <button
+            onClick={closeCopiedMessage}
+            className="text-green-700 hover:text-red-500"
+          >
+            <IoClose size={18} />
+          </button>
+        </div>
+      )}
     </div>
   );
 };
