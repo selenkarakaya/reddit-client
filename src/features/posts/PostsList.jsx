@@ -27,15 +27,22 @@ const PostsList = () => {
   }
 
   return (
-    <div className="flex justify-between ">
-      <div className="card-list">
-        <h1>postlar</h1>
-        {posts.length === 0 && <p>No posts found.</p>}
-        {posts.map((post) => (
-          <PostItem key={post.id} post={post} />
-        ))}
+    <div className="container mx-auto px-4 py-6">
+      <div className="flex flex-col-reverse lg:flex-row gap-6">
+        {/* Posts section */}
+        <div className="w-full lg:w-3/4">
+          {posts.length === 0 && <p>No posts found.</p>}
+          <div className="space-y-4">
+            {posts.map((post) => (
+              <PostItem key={post.id} post={post} />
+            ))}
+          </div>
+        </div>
+        {/* Categories / Subreddits */}
+        <aside className="w-full lg:w-1/4">
+          <CategoriesFilter />
+        </aside>
       </div>
-      <CategoriesFilter />
     </div>
   );
 };

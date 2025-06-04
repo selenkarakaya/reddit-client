@@ -92,6 +92,14 @@ const PostItem = ({ post }) => {
         style={{ padding: "10px", borderBottom: "1px solid #ccc" }}
       >
         <h3>{post.title}</h3>
+        {post.post_hint === "image" && post.url && (
+          <img
+            src={post.url}
+            alt={post.title}
+            className="my-2 max-w-full rounded shadow"
+          />
+        )}
+
         <p>Author: {post.author}</p>
         <p>Posted: {timeAgo(post.created_utc)}</p>
         <Link to={`/post/${post.subreddit}/${post.id}`}>
