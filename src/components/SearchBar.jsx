@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { fetchPosts } from "../features/posts/postsSlice";
+import { IoSearchCircleSharp } from "react-icons/io5";
 
 function SearchBar() {
   const [term, setTerm] = useState("");
@@ -19,16 +20,21 @@ function SearchBar() {
   };
 
   return (
-    <div className="flex items-center w-full max-w-md mx-auto bg-white border border-gray-300 rounded-2xl shadow-sm p-2 focus-within:ring-2 focus-within:ring-blue-500">
+    <div className="flex items-center w-full max-w-lg bg-white border border-gray-300 rounded-2xl shadow-sm px-4 py-2 focus-within:ring-2 focus-within:ring-blue-500">
       <input
         type="text"
         placeholder="Search..."
-        className="w-full px-4 py-2 bg-transparent outline-none text-gray-800 placeholder-gray-400"
+        className="flex-grow bg-transparent outline-none text-gray-800 placeholder-gray-400"
         value={term}
         onChange={(e) => setTerm(e.target.value)}
         onKeyDown={handleKeyDown}
       />
-      <button onClick={handleSearch}>Search icon</button>
+      <button
+        onClick={handleSearch}
+        className="text-blue-500 text-2xl hover:scale-110 transition"
+      >
+        <IoSearchCircleSharp />
+      </button>
     </div>
   );
 }

@@ -3,8 +3,11 @@ import SearchBar from "./SearchBar";
 
 function Header() {
   return (
-    <div className="flex justify-between">
-      <h1> Reddit </h1>
+    <div className="flex flex-col md:flex-row items-center justify-around p-4 gap-4  w-full">
+      <h1 className="text-2xl font-bold text-blue-950">
+        <strong className="text-blue-950">Reddit</strong>
+        <span className="text-gray-700">Minimal</span>
+      </h1>
       <SearchBar />
     </div>
   );
