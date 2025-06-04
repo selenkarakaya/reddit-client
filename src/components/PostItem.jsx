@@ -4,12 +4,9 @@ import PostButtons from "./PostButtons";
 
 const PostItem = ({ post }) => {
   return (
-    <div className="flex borderCSS">
+    <div className="flex borderCSS hoverCSS">
       {/* CONTENT */}
-      <div
-        className="flex-1"
-        style={{ padding: "10px", borderBottom: "1px solid #ccc" }}
-      >
+      <div className="flex-1 p-4">
         <div className="flex items-center gap-2">
           <p>{post.author} •</p>
           <p className="text-sm"> {timeAgo(post.created_utc)}</p>
