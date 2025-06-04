@@ -10,6 +10,7 @@ function SearchBar() {
   const handleSearch = () => {
     if (term.trim() !== "") {
       dispatch(fetchPosts(term.trim()));
+      setTerm("");
     }
   };
 

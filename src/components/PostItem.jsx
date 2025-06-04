@@ -1,184 +1,30 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { FaAngleDoubleUp, FaAngleDoubleDown } from "react-icons/fa";
-import { motion } from "framer-motion";
 import { timeAgo } from "../utils/timeAgo";
-import { VscCommentDraft } from "react-icons/vsc";
-import { FiShare } from "react-icons/fi";
-import { IoClose } from "react-icons/io5";
+import PostButtons from "./PostButtons";
 
 const PostItem = ({ post }) => {
-  const [score, setScore] = useState(post.score); // Track the current vote score
-  const [vote, setVote] = useState(null); // Track user vote: 'up', 'down', or null
-  const [showPopup, setShowPopup] = useState(false); // Toggle visibility of the share popup
-  const [popupPosition, setPopupPosition] = useState({ top: 0, left: 0 }); // Position of the popup
-  const shareBtnRef = useRef(null); // Reference to the share button element
-  const [copiedVisible, setCopiedVisible] = useState(false); // ⬅️ New state for copied message
-
-  // Handle vote button click (upvote or downvote)
-  const handleScore = (direction) => {
-    // If the same direction is pressed again, remove the vote
-    if (direction === vote) {
-      setVote(null);
-      setScore((prev) => (direction === "up" ? prev - 1 : prev + 1));
-    }
-    // The vote direction was changed or it's the first time voting
-    else {
-      if (vote === null) {
-        // Voting for the first time
-        setScore((prev) => (direction === "up" ? prev + 1 : prev - 1));
-      }
-      // Switched to the opposite direction (e.g., up → down)
-      else {
-        setScore((prev) => (direction === "up" ? prev + 2 : prev - 2));
-      }
-      setVote(direction);
-    }
-  };
-
-  // Copy the post's URL to clipboard
-  const handleCopyLink = (e) => {
-    const url = `${window.location.origin}/post/${post.subreddit}/${post.id}`;
-    console.log(`${window.location.origin}/post/${post.subreddit}/${post.id}`);
-    navigator.clipboard.writeText(url).then(() => {
-      setShowPopup(false);
-      setCopiedVisible(true); // Show "Copied!" message
-    });
-    // Automatically hide after 3 seconds
-    setTimeout(() => {
-      setCopiedVisible(false);
-    }, 3000);
-  };
-
-  const closeCopiedMessage = () => {
-    setCopiedVisible(false);
-  };
-
-  // Toggle the visibility and position of the popup
-  const togglePopup = () => {
-    if (showPopup) {
-      setShowPopup(false);
-    } else {
-      const rect = shareBtnRef.current.getBoundingClientRect();
-      setPopupPosition({ top: rect.bottom + 5, left: rect.left });
-      setShowPopup(true);
-    }
-  };
-
-  // Close the popup when clicking outside the share button
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (
-        showPopup &&
-        shareBtnRef.current &&
-        !shareBtnRef.current.contains(e.target)
-      ) {
-        setShowPopup(false);
-      }
-    };
-    document.addEventListener("click", handleClickOutside);
-    return () => document.removeEventListener("click", handleClickOutside);
-  }, [showPopup]);
-
   return (
-    <div className="flex justify-between borderCSS">
-      {/* VOTE COLUMN */}
-      <div className="flex flex-col justify-center">
-        <motion.button
-          whileTap={{ rotate: 15, scale: 2, x: 5, y: -5 }}
-          transition={{ type: "spring", stiffness: 300 }}
-          onClick={() => handleScore("up")}
-          className={`transition ${vote === "up" ? "text-green-500" : ""}`}
-        >
-          <FaAngleDoubleUp />
-        </motion.button>
-        <p
-          className={`transition ${
-            vote === "up"
-              ? "text-green-500"
-              : vote === "down"
-              ? "text-red-500"
-              : ""
-          }`}
-        >
-          {score}
-        </p>
-        <motion.button
-          whileTap={{ rotate: 15, scale: 2, x: 5, y: -5 }}
-          transition={{ type: "spring", stiffness: 300 }}
-          onClick={() => handleScore("down")}
-          className={`transition transform active:scale-125 duration-150 ${
-            vote === "down" ? "text-red-500" : ""
-          }`}
-        >
-          <FaAngleDoubleDown />
-        </motion.button>
-      </div>
+    <div className="flex borderCSS">
       {/* CONTENT */}
       <div
-        className="post-item"
+        className="flex-1"
         style={{ padding: "10px", borderBottom: "1px solid #ccc" }}
       >
-        <h3>{post.title}</h3>
+        <div className="flex items-center gap-2">
+          <p>{post.author} •</p>
+          <p className="text-sm"> {timeAgo(post.created_utc)}</p>
+        </div>
+        <p className="text-lg">{post.title}</p>
         {post.post_hint === "image" && post.url && (
           <img
             src={post.url}
             alt={post.title}
-            className="my-2 max-w-full rounded shadow"
+            className="my-2 max-w-full rounded shadow "
           />
         )}
-
-        <p>{post.author}</p>
-        <p> {timeAgo(post.created_utc)}</p>
-
-        <div className="flex items-center gap-3 mt-2">
-          <Link
-            to={`/post/${post.subreddit}/${post.id}`}
-            className="flex items-center gap-1 text-blue-500"
-          >
-            <VscCommentDraft />
-            <span>{post.num_comments}</span>
-          </Link>
-
-          {/* Share Button */}
-          <button
-            ref={shareBtnRef}
-            onClick={togglePopup}
-            className="text-gray-600 hover:text-blue-500"
-            title="Share"
-          >
-            <FiShare />
-          </button>
-        </div>
+        <div className="border-b-2 border-b-gray-200 w-full"></div>
+        <PostButtons post={post} />
       </div>
-      {/* Share Popup */}
-      {showPopup && (
-        <div
-          style={{
-            position: "fixed",
-            top: popupPosition.top,
-            left: popupPosition.left,
-            zIndex: 9999,
-          }}
-          className="bg-white border border-gray-300 rounded shadow-md px-4 py-2"
-        >
-          <button onClick={handleCopyLink} className="text-sm text-blue-600">
-            Copy Link
-          </button>
-        </div>
-      )}
-      {/* ✅ Copied Message Box */}
-      {copiedVisible && (
-        <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-green-100 border border-green-400 text-green-700 px-4 py-2 rounded shadow-lg flex items-center gap-2 z-[9999]">
-          <span>Link copied!</span>
-          <button
-            onClick={closeCopiedMessage}
-            className="text-green-700 hover:text-red-500"
-          >
-            <IoClose size={18} />
-          </button>
-        </div>
-      )}
     </div>
   );
 };
