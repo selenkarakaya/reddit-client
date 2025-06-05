@@ -12,9 +12,11 @@ A modern Reddit client built with **React**, using **Redux Toolkit**, **Tailwind
 
 ## 🖼️ Wireframes
 
-- 🏠 **Home Page** – post list with filters and votes  
+- 🏠 **Home Page** – post list with filters and votes
+  ![Home Page Wireframe](https://github.com/selenkarakaya/reddit-client/blob/main/src/assets/Wireframe1.png)
 - 📝 **Post Detail** – individual post with comments
 
+![Post Detail Wireframe](https://github.com/selenkarakaya/reddit-client/blob/main/src/assets/Wireframe2.png)
 ---
 
 ## 🛠️ Tech Stack
