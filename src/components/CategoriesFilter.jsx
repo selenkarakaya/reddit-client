@@ -9,7 +9,6 @@ const categories = [
   "NoStupidQuestions",
   "BaldursGate3",
   "facepalm",
-  "interestingasfuck",
   "Damnthatsinteresting",
   "LivestreamFail",
   "pics",
@@ -36,6 +35,7 @@ function CategoriesFilter() {
   const selectedCategory = useSelector((state) => state.posts.selectedCategory);
   const [showAll, setShowAll] = useState(false);
   const width = useWindowWidth();
+
   const handleCategoryClick = (category) => {
     const subreddit = category === "Home" ? "popular" : category;
     if (category === selectedCategory) return; //Do not fetch if the same category is clicked

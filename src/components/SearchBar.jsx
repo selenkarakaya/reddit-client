@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { fetchPosts } from "../features/posts/postsSlice";
+import { searchPosts } from "../features/posts/postsSlice";
 import { IoSearchCircleSharp } from "react-icons/io5";
 
 function SearchBar() {
@@ -8,10 +8,11 @@ function SearchBar() {
   const dispatch = useDispatch();
 
   const handleSearch = () => {
-    if (term.trim() !== "") {
-      dispatch(fetchPosts(term.trim()));
-      setTerm("");
-    }
+    const trimmed = term.trim();
+    if (!trimmed) return;
+
+    dispatch(searchPosts(trimmed));
+    setTerm("");
   };
 
   const handleKeyDown = (e) => {

@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk, isRejected } from "@reduxjs/toolkit";
 import axios from "axios";
 
-// Async thunk: To fetch data from the Reddit API
+// Async thunk: To fetch subreddit data from the Reddit API
 
 export const fetchPosts = createAsyncThunk(
   "posts/fetchPosts",
@@ -13,8 +13,19 @@ export const fetchPosts = createAsyncThunk(
       throw new Error(message);
     }
     const data = await response.json();
+    return data.data.children.map((child) => child.data);
+  }
+);
 
-    // Sadece posts dizisini dön
+// Async thunk: To fetch posts via search term
+export const searchPosts = createAsyncThunk(
+  "posts/searchPosts",
+  async (term) => {
+    const response = await fetch(
+      `https://www.reddit.com/search.json?q=${encodeURIComponent(term)}`
+    );
+    if (!response.ok) throw new Error("Search failed");
+    const data = await response.json();
     return data.data.children.map((child) => child.data);
   }
 );
@@ -26,6 +37,7 @@ const postsSlice = createSlice({
     status: "idle", // idle | loading | succeeded | failed
     error: null,
     selectedCategory: "popular",
+    searchTerm: "",
   },
 
   reducers: {
@@ -45,9 +57,20 @@ const postsSlice = createSlice({
       .addCase(fetchPosts.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
+      })
+      .addCase(searchPosts.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(searchPosts.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.items = action.payload;
+      })
+      .addCase(searchPosts.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
       });
   },
 });
 
-export const { setSelectedCategory } = postsSlice.actions;
+export const { setSelectedCategory, setSearchTerm } = postsSlice.actions;
 export default postsSlice.reducer;
