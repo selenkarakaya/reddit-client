@@ -47,8 +47,8 @@ const AuthorInfo = ({ author }) => {
   if (!authorInfo) return null;
 
   return (
-    <div className="mt-4 p-6 border rounded bg-gray-50 h-80">
-      <div className="flex items-center gap-2">
+    <div className="mt-4 p-6 border rounded bg-gray-50">
+      <div className="items-center gap-2">
         {!imageError && authorInfo?.icon_img ? (
           <img
             src={authorInfo.icon_img}
@@ -67,7 +67,7 @@ const AuthorInfo = ({ author }) => {
       <p>{authorInfo.subreddit?.public_description}</p>
       <p>{authorInfo.subreddit?.title}</p>
       <p className="text-xs text-gray-500">
-        Karma: {authorInfo.total_karma.toLocaleString()} • Joined{" "}
+        Karma: {authorInfo.total_karma.toLocaleString()} • Joined
         {timeAgo(authorInfo.created_utc)}
       </p>
 

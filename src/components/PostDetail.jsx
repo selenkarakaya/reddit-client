@@ -33,8 +33,8 @@ const PostDetail = () => {
   }
   return (
     <div className="container mx-auto flex gap-6">
-      <div className="flex-1 px-4 py-6  my-4 borderCSS">
-        <div className="flex-1 p-4">
+      <div className="w-[70%] px-4 py-6  my-4 borderCSS">
+        <div className="p-4">
           <PostItem post={post} />
           {/* Comments Section */}
           <h3 className="text-lg font-bold mt-6 mb-2">Comments</h3>
@@ -47,7 +47,7 @@ const PostDetail = () => {
           </div>
         </div>
       </div>
-      <div className="hidden md:block ">
+      <div className="hidden md:block w-[25%]">
         {post?.author && <AuthorInfo author={post.author} />}
       </div>
     </div>
