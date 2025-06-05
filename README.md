@@ -118,15 +118,17 @@ npm run dev
 ## 📦 Deployment
 
 **Platforms:**  
-Netlify, Vercel, GitHub Pages
+Netlify
 
-### ✅ Things to Verify
+## 📊 Lighthouse Score
 
-- Initial data loads successfully
-- Dynamic routes work (e.g., `/post/:subreddit/:id`)
-- Fully responsive layout
-- No console errors in production
-- Optimized assets and performance
+| Category       | Score |
+| -------------- | ----- |
+| Performance    | 82    |
+| Accessibility  | 83   |
+| Best Practices | 100   |
+| SEO            | 83    |
+
 
 ---
 
