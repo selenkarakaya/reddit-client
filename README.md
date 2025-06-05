@@ -124,11 +124,10 @@ Netlify
 
 | Category       | Score |
 | -------------- | ----- |
-| Performance    | 89    |
-| Accessibility  | 95   |
+| Performance    | 93    |
+| Accessibility  | 95    |
 | Best Practices | 100   |
 | SEO            | 83    |
-
 
 ---
 
