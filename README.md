@@ -14,9 +14,8 @@ A modern Reddit client built with **React**, using **Redux Toolkit**, **Tailwind
 
 | Home Page                                            | Post Detail                                          |
 | ---------------------------------------------------- | ---------------------------------------------------- |
-| <img src="./src/assets/Wireframe1.png" width="300"/> | <img src="./src/assets/Wireframe2.png" width="300"/> |
+| <img src="./src/assets/Wireframe1.png" width="500"/> | <img src="./src/assets/Wireframe2.png" width="500"/> |
 
-</div>
 ## 🛠️ Tech Stack
 
 - **React** – component-based UI
