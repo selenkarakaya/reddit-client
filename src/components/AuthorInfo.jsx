@@ -55,6 +55,7 @@ const AuthorInfo = ({ author }) => {
             alt={`${author}'s avatar`}
             className="w-10 h-10 rounded-full"
             onError={() => setImageError(true)}
+            loading="lazy"
           />
         ) : (
           <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-xl text-red-600">
@@ -83,6 +84,7 @@ const AuthorInfo = ({ author }) => {
                   src={trophy.icon_40}
                   alt={trophy.name}
                   className="w-6 h-6"
+                  loading="lazy"
                 />
                 <span className="text-sm">{trophy.name}</span>
               </div>
