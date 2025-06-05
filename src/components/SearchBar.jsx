@@ -28,6 +28,7 @@ function SearchBar() {
       <input
         type="text"
         placeholder="Search..."
+        aria-label="Search posts"
         className="flex-grow bg-transparent outline-none text-gray-800 placeholder-gray-400"
         value={term}
         onChange={(e) => setTerm(e.target.value)}
@@ -36,6 +37,7 @@ function SearchBar() {
       <button
         onClick={handleSearch}
         className="text-blue-500 text-2xl hover:scale-110 transition"
+        aria-label="Search button"
       >
         <IoSearchCircleSharp />
       </button>
