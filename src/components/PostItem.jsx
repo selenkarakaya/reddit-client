@@ -16,7 +16,8 @@ const PostItem = ({ post }) => {
           <img
             src={post.url}
             alt={post.title}
-            className="my-2 max-w-full rounded shadow "
+            className="my-2 max-w-full rounded shadow"
+            loading="lazy"
           />
         )}
         <div className="border-b-2 border-b-gray-200 w-full"></div>

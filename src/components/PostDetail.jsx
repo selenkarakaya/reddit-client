@@ -7,6 +7,7 @@ import LoadingSpinner from "./LoadingSpinner";
 import { timeAgo } from "../utils/timeAgo";
 import PostButtons from "./PostButtons";
 import AuthorInfo from "./AuthorInfo";
+import PostItem from "./PostItem";
 
 const PostDetail = () => {
   const { subreddit, postId } = useParams();
@@ -35,33 +36,7 @@ const PostDetail = () => {
     <div className="container mx-auto flex gap-6">
       <div className="flex-1 px-4 py-6  my-4 borderCSS">
         <div className="flex-1 p-4">
-          {/* Post Header */}
-          <div className="flex items-center gap-2 mb-1 text-sm text-gray-600">
-            <p>
-              {post.author} • <span>{post.num_comments}</span>
-            </p>
-            <p>{timeAgo(post.created_utc)}</p>
-          </div>
-
-          {/* Post Title */}
-          <h2 className="text-lg font-semibold mb-2">{post.title}</h2>
-
-          {/* Post Body (if any) */}
-          {post.selftext && <p className="mb-4">{post.selftext}</p>}
-
-          {/* Post Image (if any) */}
-          {post.post_hint === "image" && post.url && (
-            <img
-              src={post.url}
-              alt={post.title}
-              className="my-2 max-w-full rounded shadow"
-            />
-          )}
-
-          <div className="border-b-2 border-gray-200 w-full my-2" />
-
-          {/* Post Buttons */}
-          <PostButtons post={post} />
+          <PostItem post={post} />
 
           {/* Comments Section */}
           <h3 className="text-lg font-bold mt-6 mb-2">Comments</h3>

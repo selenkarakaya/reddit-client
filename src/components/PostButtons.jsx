@@ -88,6 +88,8 @@ function PostButtons({ post }) {
             transition={{ type: "spring", stiffness: 300 }}
             onClick={() => handleScore("up")}
             className={`transition ${vote === "up" ? "text-green-500" : ""}`}
+            aria-label="Upvote"
+            aria-pressed={vote === "up"}
           >
             <PiArrowFatUpBold />
           </motion.button>
@@ -109,6 +111,8 @@ function PostButtons({ post }) {
             className={`transition transform active:scale-125 duration-150 ${
               vote === "down" ? "text-red-500" : ""
             }`}
+            aria-label="Downvote"
+            aria-pressed={vote === "down"}
           >
             <PiArrowFatDownBold />
           </motion.button>
@@ -128,6 +132,7 @@ function PostButtons({ post }) {
           onClick={togglePopup}
           className="flex justify-between items-center gap-2  bg-gray-200 rounded-4xl px-2 py-1.5 text-gray-600"
           title="Share"
+          aria-label="Share Button"
         >
           <TbShare3 />
           Share
@@ -146,6 +151,7 @@ function PostButtons({ post }) {
             <button
               onClick={handleCopyLink}
               className="text-xs md:text-sm flex justify-between items-center gap-2"
+              aria-label="Copy post link"
             >
               <FaCopy />
               Copy Link
@@ -156,7 +162,12 @@ function PostButtons({ post }) {
         {copiedVisible && (
           <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-green-100 border border-green-400 text-green-700 px-4 py-2 rounded-4xl shadow-lg flex items-center gap-2 z-[9999]">
             <span>Link copied!</span>
-            <button onClick={closeCopiedMessage} className="text-red-500">
+            <button
+              onClick={closeCopiedMessage}
+              className="text-red-500"
+              aria-label="Close Modal"
+              title="Close"
+            >
               <IoClose size={18} />
             </button>
           </div>
