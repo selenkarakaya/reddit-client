@@ -124,8 +124,8 @@ Netlify
 
 | Category       | Score |
 | -------------- | ----- |
-| Performance    | 82    |
-| Accessibility  | 83   |
+| Performance    | 89    |
+| Accessibility  | 95   |
 | Best Practices | 100   |
 | SEO            | 83    |
 
