@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React from "react";
 import { timeAgo } from "../utils/timeAgo";
 import PostButtons from "./PostButtons";
 
@@ -8,7 +8,7 @@ const PostItem = ({ post }) => {
       {/* CONTENT */}
       <div className="flex-1 p-4">
         <div className="flex items-center gap-2">
-          <p>{post.author} •</p>
+          <p>{post.author} • </p>
           <p className="text-sm"> {timeAgo(post.created_utc)}</p>
         </div>
         <p className="text-lg">{post.title}</p>

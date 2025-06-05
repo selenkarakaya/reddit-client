@@ -39,6 +39,7 @@ function SearchBar() {
         onClick={handleSearch}
         className="text-blue-500 text-2xl hover:scale-110 transition"
         aria-label="Search button"
+        title="Search"
       >
         <IoSearchCircleSharp />
       </button>
