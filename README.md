@@ -39,7 +39,9 @@ src/
 │   ├── LoadingSpinner.jsx        # Global loading spinner
 │   ├── PostItem.jsx              # Single post display (vote, info, link)
 │   ├── Header.jsx                # List of posts
-│   ├── PostsDetail.jsx
+│   ├── PostsDetail.jsx           # Post details with comments
+│   ├── AuthorInfo.jsx
+│   ├── PostButtons.jsx
 │   └── SearchBar.jsx             # Subreddit search
 ├── features/
 │   └── posts/
@@ -47,10 +49,8 @@ src/
 │       └── postsSlice.js         # Redux slice for posts
 │   └── comments/
 │       └── commentsSlice.js
-├── pages/
-│   ├── Home.jsx                  # Main post listing page
-│   └── PostDetail.jsx            # Post details with comments
 ├── utils/
+│   ├── useWindowWidth.js
 │   └── timeAgo.js                # Utility to format post times
 ├── pages/
 │    └── store.js                 # Redux store configuration
