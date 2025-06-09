@@ -6,7 +6,7 @@ A modern Reddit client built with **React**, using **Redux Toolkit**, **Tailwind
 
 ## 🚀 Live Demo
 
-🔗 [https://clientreddit.netlify.app/](https://clientreddit.netlify.app/)
+🔗 [Reddit Minimal](https://clientreddit.netlify.app/)
 
 ---
 
