@@ -8,7 +8,6 @@ function PostComments({ comment }) {
         <p className="text-xs text-gray-500">{timeAgo(comment.created_utc)}</p>
       </div>
       <p className="text-sm">{comment.body}</p>
-      {/* <p>{comment.score}</p> */}
     </div>
   );
 }
