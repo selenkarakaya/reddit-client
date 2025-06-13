@@ -7,7 +7,7 @@ import SearchBar from "../components/SearchBar";
  *🧠 Why? In the test, we don't want to connect to the real Redux store; we only want to check whether dispatch was called or not.
  */
 jest.mock("react-redux", () => ({
-  ...jest.requireActual("react-redux"), // diğer exportları olduğu gibi bırak
+  ...jest.requireActual("react-redux"),
   useDispatch: () => jest.fn(), // Returns a new empty function (mock) each time it is called.
 }));
 
