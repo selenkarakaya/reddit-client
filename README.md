@@ -1,4 +1,7 @@
 # 📘 Reddit Client App
+<p align="end">
+  <img src="https://codecov.io/gh/selenkarakaya/reddit-client/branch/main/graph/badge.svg" alt="Coverage Badge" width="150" />
+</p>
 
 A modern Reddit client built with **React**, using **Redux Toolkit**, **Tailwind CSS**, and the **Reddit JSON API**. Features include post browsing, subreddit filtering, comments view, and voting simulation.
 
