@@ -131,6 +131,27 @@ Netlify
 
 ---
 
+## Test Coverage Summary
+
+| File/Folder            | % Statements | % Branches | % Functions | % Lines | Uncovered Lines |
+| ---------------------- | ------------ | ---------- | ----------- | ------- | --------------- |
+| **All files**          | 94.25%       | 93.04%     | 93.15%      | 95.58%  |                 |
+| **components**         | 95.41%       | 94.04%     | 93.75%      | 96.42%  |                 |
+| - AuthorInfo.jsx       | 91.17%       | 95.83%     | 83.33%      | 92.3%   | 41, 56          |
+| - CategoriesFilter.jsx | 94.73%       | 83.33%     | 100%        | 100%    | 40-41           |
+| - LoadingSpinner.jsx   | 100%         | 100%       | 100%        | 100%    |                 |
+| - PostButtons.jsx      | 95.23%       | 93.1%      | 93.33%      | 94.73%  | 48, 59          |
+| - PostComments.jsx     | 100%         | 100%       | 100%        | 100%    |                 |
+| - PostDetail.jsx       | 100%         | 100%       | 100%        | 100%    |                 |
+| - PostItem.jsx         | 100%         | 100%       | 100%        | 100%    |                 |
+| - SearchBar.jsx        | 100%         | 100%       | 100%        | 100%    |                 |
+| **features/posts**     | 90.19%       | 82.35%     | 95%         | 90.9%   |                 |
+| - PostsList.jsx        | 100%         | 100%       | 100%        | 100%    |                 |
+| - postsSlice.js        | 83.33%       | 40%        | 91.66%      | 85.18%  | 11-13, 45       |
+| **utils**              | 96.29%       | 100%       | 80%         | 100%    |                 |
+| - timeAgo.js           | 100%         | 100%       | 100%        | 100%    |                 |
+| - useWindowWidth.js    | 87.5%        | 100%       | 75%         | 100%    |                 |
+
 ## 📌 Notes
 
 - `timeAgo.js` is a shared utility used in both `PostItem` and `PostDetail` components to format post timestamps.
