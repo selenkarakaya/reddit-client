@@ -19,7 +19,6 @@ const AuthorInfo = ({ author }) => {
       })
       .then((data) => setAuthorInfo(data.data))
       .catch((err) => {
-        console.error("Author info error:", err);
         setAuthorError("Could not load author info");
       });
   }, [author]);
@@ -66,9 +65,14 @@ const AuthorInfo = ({ author }) => {
       </div>
       <p>{authorInfo.subreddit?.public_description}</p>
       <p>{authorInfo.subreddit?.title}</p>
-      <p className="text-xs text-gray-500">
+      {/* <p className="text-xs text-gray-500">
         Karma: {authorInfo.total_karma.toLocaleString()} • Joined
         {timeAgo(authorInfo.created_utc)}
+      </p> */}
+
+      <p className="text-xs text-gray-500">
+        Karma: {authorInfo.total_karma?.toLocaleString() ?? "N/A"} • Joined{" "}
+        {authorInfo.created_utc ? timeAgo(authorInfo.created_utc) : ""}
       </p>
 
       {trophies?.length > 0 && (
