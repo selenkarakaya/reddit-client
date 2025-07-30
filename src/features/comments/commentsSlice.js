@@ -3,7 +3,12 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 export const fetchComments = createAsyncThunk(
   "comments/fetchComments",
   async (permalink) => {
-    const response = await fetch(`https://www.reddit.com${permalink}.json`);
+    const response = await fetch(
+      `/.netlify/functions/redditProxy?permalink=${encodeURIComponent(
+        permalink
+      )}`
+    );
+
     if (!response.ok) throw new Error("Failed to fetch comments");
     const data = await response.json();
 
