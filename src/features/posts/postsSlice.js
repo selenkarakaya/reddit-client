@@ -6,10 +6,7 @@ import axios from "axios";
 export const fetchPosts = createAsyncThunk(
   "posts/fetchPosts",
   async (subreddit = "popular") => {
-    const response = await fetch(
-      `/.netlify/functions/redditProxy?subreddit=${subreddit}`
-    );
-
+    const response = await fetch(`https://www.reddit.com/r/${subreddit}/.json`);
     if (!response.ok) {
       const error = await response.json();
       const message = `An error has occured: ${response.status} ${error.message}`;
@@ -25,11 +22,8 @@ export const searchPosts = createAsyncThunk(
   "posts/searchPosts",
   async (term) => {
     const response = await fetch(
-      `/.netlify/functions/redditProxy?subreddit=search&q=${encodeURIComponent(
-        term
-      )}`
+      `https://www.reddit.com/search.json?q=${encodeURIComponent(term)}`
     );
-
     if (!response.ok) throw new Error("Search failed");
     const data = await response.json();
     return data.data.children.map((child) => child.data);
